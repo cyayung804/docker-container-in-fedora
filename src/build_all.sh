@@ -18,19 +18,19 @@ function alpine()
 
     cd "src/${image_name}" || exit 1
 
-    while read -r IMAGE_TAG; do
-        if crane ls "${image_registry}/${image_name}" | grep -q "${IMAGE_TAG}"; then
-            echo "${image_registry}/${image_name}:${IMAGE_TAG} already exists..."
+    while read -r image_tag; do
+        if crane ls "${image_registry}/${image_name}" | grep -q "${image_tag}"; then
+            echo "${image_registry}/${image_name}:${image_tag} already exists..."
             continue
         fi
-        export ALPINE_VERSION="${IMAGE_TAG}"
+        export ALPINE_VERSION="${image_tag}"
         export IMAGE_NAME="${image_name}"
         export IMAGE_REGISTRY="${image_registry}"
-        export IMAGE_TAG="${IMAGE_TAG}"
+        export IMAGE_TAG="${image_tag}"
 
-        echo "Building ${image_registry}/${image_name}:${IMAGE_TAG}..."
+        echo "Building ${image_registry}/${image_name}:${image_tag}..."
         mkdir -p "/tmp/build-logs/${image_name}"
-        docker buildx bake push --progress=plain 2>&1 | tee -a "/tmp/build-logs/${image_name}/${IMAGE_TAG}.log"
+        docker buildx bake push --progress=plain 2>&1 | tee -a "/tmp/build-logs/${image_name}/${image_tag}.log"
     done < <(echo "${alpine_versions}")
 }
 
@@ -46,16 +46,16 @@ function golang()
     cd "src/${image_name}" || exit 1
 
     for alpine_version in ${alpine_versions}; do
-        while read -r IMAGE_TAG; do
-            export image_tag="${IMAGE_TAG}-alpine${alpine_version}"
-            if [[ "${IMAGE_TAG}" != "latest" ]] && crane ls "${image_registry}/${image_name}" | grep -q "${image_tag}"; then
+        while read -r image_tag; do
+            export image_tag="${image_tag}-alpine${alpine_version}"
+            if [[ "${image_tag}" != "latest" ]] && crane ls "${image_registry}/${image_name}" | grep -q "${image_tag}"; then
                 echo "${image_registry}/${image_name}:${image_tag} already exists..."
             else
                 export ALPINE_VERSION="${alpine_version}"
-                export GO_VERSION="${IMAGE_TAG}"
+                export GO_VERSION="${image_tag}"
                 export IMAGE_NAME="${image_name}"
                 export IMAGE_REGISTRY="${image_registry}"
-                export IMAGE_TAG="${GO_VERSION}"
+                export IMAGE_TAG="${image_tag}"
 
                 echo "Building ${image_registry}/${image_name}:${image_tag}..."
                 docker buildx bake push --progress=plain
@@ -76,16 +76,16 @@ function terraform()
     cd "src/${image_name}" || exit 1
 
     for alpine_version in ${alpine_versions}; do
-        while read -r IMAGE_TAG; do
-            export image_tag="${IMAGE_TAG}-alpine${alpine_version}"
-            if [[ "${IMAGE_TAG}" != "latest" ]] && crane ls "${image_registry}/${image_name}" | grep -q "${image_tag}"; then
+        while read -r image_tag; do
+            export image_tag="${image_tag}-alpine${alpine_version}"
+            if [[ "${image_tag}" != "latest" ]] && crane ls "${image_registry}/${image_name}" | grep -q "${image_tag}"; then
                 echo "${image_registry}/${image_name}:${image_tag} already exists..."
             else
                 export ALPINE_VERSION="${alpine_version}"
-                export TF_VERSION="${IMAGE_TAG}"
+                export TF_VERSION="${image_tag}"
                 export IMAGE_NAME="${image_name}"
                 export IMAGE_REGISTRY="${image_registry}"
-                export IMAGE_TAG="${TF_VERSION}"
+                export IMAGE_TAG="${image_tag}"
 
                 echo "Building ${image_registry}/${image_name}:${image_tag}..."
                 docker buildx bake push --progress=plain
