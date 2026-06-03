@@ -47,6 +47,7 @@ function golang()
     cd "src/${image_name}" || exit 1
 
     export image_tag="${IMAGE_TAG}-alpine${alpine_version}"
+
     if [[ "${IMAGE_TAG}" != "latest" ]] && crane ls "${image_registry}/${image_name}" | grep -q "${image_tag}"; then
         echo "${image_registry}/${image_name}:${image_tag} already exists..."
     else
@@ -72,6 +73,7 @@ function terraform()
     cd "src/${image_name}" || exit 1
 
     export image_tag="${IMAGE_TAG}-alpine${alpine_version}"
+    
     if [[ "${IMAGE_TAG}" != "latest" ]] && crane ls "${image_registry}/${image_name}" | grep -q "${image_tag}"; then
         echo "${image_registry}/${image_name}:${image_tag} already exists..."
     else

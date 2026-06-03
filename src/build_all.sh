@@ -10,7 +10,7 @@ docker buildx version
 
 function alpine()
 {
-    local alpine_versions="$(sort -V .alpine-versions.txt)"
+    local alpine_versions="$(cat .alpine-versions.txt | sort -V)"
     local image_name="alpine"
     local image_registry="index.docker.io/cyayung804"
 
@@ -36,7 +36,7 @@ function alpine()
 function golang()
 {
     local alpine_versions="$(sort -V .alpine-versions.txt)"
-    local go_versions="$(sort -V .go-versions.txt | head -n +57)" # index head -n +57 rebuild
+    local go_versions="$(cat .go-versions.txt | head -n +48 | sort -V)" # index head -n +48 rebuild
     local image_name="golang"
     local image_registry="index.docker.io/cyayung804"
 
@@ -46,10 +46,13 @@ function golang()
 
     for alpine_version in ${alpine_versions}; do
         while read -r IMAGE_TAG; do
+
             export image_tag="${IMAGE_TAG}-alpine${alpine_version}"
+
             if [[ "${IMAGE_TAG}" != "latest" ]] && crane ls "${image_registry}/${image_name}" | grep -q "${image_tag}"; then
                 echo "${image_registry}/${image_name}:${image_tag} already exists..."
             else
+
                 export ALPINE_VERSION="${alpine_version}"
                 export GO_VERSION="${IMAGE_TAG}"
                 export IMAGE_NAME="${image_name}"
@@ -66,7 +69,7 @@ function golang()
 function terraform()
 {
     local alpine_versions="$(sort -V .alpine-versions.txt)"
-    local tf_versions="$(sort -V .tf-versions.txt | head -n +137)" # index head -n +137 rebuild
+    local tf_versions="$(cat .tf-versions.txt | head -n +140 | sort -V)" # index head -n +140 rebuild
     local image_name="terraform"
     local image_registry="index.docker.io/cyayung804"
 
@@ -76,10 +79,13 @@ function terraform()
 
     for alpine_version in ${alpine_versions}; do
         while read -r IMAGE_TAG; do
+
             export image_tag="${IMAGE_TAG}-alpine${alpine_version}"
+
             if [[ "${IMAGE_TAG}" != "latest" ]] && crane ls "${image_registry}/${image_name}" | grep -q "${image_tag}"; then
                 echo "${image_registry}/${image_name}:${image_tag} already exists..."
             else
+            
                 export ALPINE_VERSION="${alpine_version}"
                 export TF_VERSION="${IMAGE_TAG}"
                 export IMAGE_NAME="${image_name}"
