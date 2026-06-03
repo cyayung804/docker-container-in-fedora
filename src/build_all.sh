@@ -29,7 +29,7 @@ function alpine()
         export IMAGE_TAG="${IMAGE_TAG}"
 
         echo "Building ${image_registry}/${image_name}:${IMAGE_TAG}..."
-        docker buildx bake push --progressive=plain --no-cache
+        docker buildx bake push --no-cache
     done < <(echo "${alpine_versions}")
 }
 
@@ -57,7 +57,7 @@ function golang()
                 export IMAGE_TAG="${GO_VERSION}"
 
                 echo "Building ${image_registry}/${image_name}:${image_tag}..."
-                docker buildx bake push --progressive=plain --no-cache
+                docker buildx bake push --no-cache
             fi
         done < <(echo "${go_versions}")
     done
@@ -87,7 +87,7 @@ function terraform()
                 export IMAGE_TAG="${TF_VERSION}"
 
                 echo "Building ${image_registry}/${image_name}:${image_tag}..."
-                docker buildx bake push --progressive=plain --no-cache
+                docker buildx bake push --no-cache
             fi
         done < <(echo "${tf_versions}")
     done

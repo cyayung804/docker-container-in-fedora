@@ -26,7 +26,7 @@ function alpine()
         echo "${image_registry}/${image_name}:${IMAGE_TAG} already exists..."
     else
         echo "Building ${image_registry}/${image_name}:${IMAGE_TAG}..."
-        docker buildx bake push --progressive=plain --no-cache
+        docker buildx bake push --no-cache
     fi
 }
 
@@ -51,7 +51,7 @@ function golang()
         echo "${image_registry}/${image_name}:${image_tag} already exists..."
     else
         echo "Building ${image_registry}/${image_name}:${image_tag}..."
-        docker buildx bake push --progressive=plain --no-cache
+        docker buildx bake push --no-cache
     fi
 }
 
@@ -76,7 +76,7 @@ function terraform()
         echo "${image_registry}/${image_name}:${image_tag} already exists..."
     else
         echo "Building ${image_registry}/${image_name}:${image_tag}..."
-        docker buildx bake push --progressive=plain --no-cache
+        docker buildx bake push --no-cache
     fi
 }
 
