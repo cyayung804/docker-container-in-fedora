@@ -2,8 +2,6 @@
 
 set -e
 
-echo "==> Running $(dirname "$(realpath "$0")")/update.sh"
-
 regex_minor_semver='^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$'
 regex_patch_semver='^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$'
 
@@ -21,16 +19,19 @@ function alpine()
 
     echo "${latest_versions}" > .alpine-versions.txt
     cat .alpine-versions.txt | head -n 1 > .alpine-version
+    
     echo ".alpine-version:"
     cat .alpine-version
+    
     echo ".alpine-versions.txt:"
     cat .alpine-versions.txt
-    cp -f .alpine-version src/alpine/.alpine-version || exit 1
-    cp -f .alpine-versions.txt src/alpine/.alpine-versions.txt || exit 1
-    cp -f .alpine-version src/golang/.alpine-version || exit 1
-    cp -f .alpine-versions.txt src/golang/.alpine-versions.txt || exit 1
-    cp -f .alpine-version src/terraform/.alpine-version || exit 1
-    cp -f .alpine-versions.txt src/terraform/.alpine-versions.txt || exit 1
+    
+    cp -fv .alpine-version src/alpine/.alpine-version || exit 1
+    cp -fv .alpine-versions.txt src/alpine/.alpine-versions.txt || exit 1
+    cp -fv .alpine-version src/golang/.alpine-version || exit 1
+    cp -fv .alpine-versions.txt src/golang/.alpine-versions.txt || exit 1
+    cp -fv .alpine-version src/terraform/.alpine-version || exit 1
+    cp -fv .alpine-versions.txt src/terraform/.alpine-versions.txt || exit 1
 }
 
 function golang()
@@ -47,12 +48,15 @@ function golang()
 
     echo "${latest_versions}" > .go-versions.txt
     cat .go-versions.txt | head -n 1 > .go-version
+    
     echo ".go-version:"
     cat .go-version
+    
     echo ".go-versions.txt:"
     cat .go-versions.txt
-    cp -f .go-version src/golang/.go-version || exit 1
-    cp -f .go-versions.txt src/golang/.go-versions.txt || exit 1
+    
+    cp -fv .go-version src/golang/.go-version || exit 1
+    cp -fv .go-versions.txt src/golang/.go-versions.txt || exit 1
 }
 
 function terraform()
@@ -69,12 +73,15 @@ function terraform()
     
     echo "${latest_versions}" > .tf-versions.txt
     cat .tf-versions.txt | head -n 1 > .tf-version
+    
     echo ".tf-version:"
     cat .tf-version
+    
     echo ".tf-versions.txt:"
     cat .tf-versions.txt
-    cp -f .tf-version src/terraform/.tf-version || exit 1
-    cp -f .tf-versions.txt src/terraform/.tf-versions.txt || exit 1
+    
+    cp -fv .tf-version src/terraform/.tf-version || exit 1
+    cp -fv .tf-versions.txt src/terraform/.tf-versions.txt || exit 1
 }
 
 "$@"
