@@ -9,6 +9,10 @@ on:
       - '.alpine-version'
   workflow_dispatch:
 
+permissions:
+  contents: read
+  actions: read
+
 jobs:
   docker-build:
     runs-on: ubuntu-latest
