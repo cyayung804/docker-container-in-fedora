@@ -77,6 +77,4 @@ function terraform()
     cp -f .tf-versions.txt src/terraform/.tf-versions.txt || exit 1
 }
 
-alpine
-golang
-terraform
+"$@"
