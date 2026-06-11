@@ -4,8 +4,6 @@ name: Docker tags update
 on:
   workflow_dispatch:
   schedule:
-    # 00:00 UTC is 08:00 SGT
-    # 12:00 UTC is 20:00 SGT
     - cron: '0 0,12 * * *'
 
 permissions:
@@ -33,4 +31,4 @@ jobs:
           git commit -m "Scheduled file updates: Run update.sh" || echo "No changes to commit"
           git push origin main
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
