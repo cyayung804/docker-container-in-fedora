@@ -2,9 +2,8 @@
 
 set -e
 
-echo "==> Running $(dirname "$(realpath "$0")")/build.sh"
-
 date="$(date -Iseconds)"
+
 docker --version
 docker buildx version
 
