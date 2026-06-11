@@ -2,8 +2,6 @@
 
 set -e
 
-echo "==> Running $(dirname "$(realpath "$0")")/install.sh"
-
 function cleanup() {
     echo "  -> Cleaning up temporary files..."
     rm -rfv /tmp/go-containerregistry.tar.gz
