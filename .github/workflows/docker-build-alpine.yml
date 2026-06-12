@@ -7,11 +7,8 @@ on:
       - main
     paths:
       - '.alpine-version'
+      - 'src/alpine/**'
   workflow_dispatch:
-
-permissions:
-  contents: read
-  actions: read
 
 jobs:
   docker-build:
