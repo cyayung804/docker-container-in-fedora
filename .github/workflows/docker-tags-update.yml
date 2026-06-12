@@ -6,10 +6,6 @@ on:
   schedule:
     - cron: '0 0,12 * * *'
 
-permissions:
-  contents: write
-  actions: write
-
 jobs:
   docker-tags-update:
     runs-on: ubuntu-latest
@@ -31,4 +27,4 @@ jobs:
           git commit -m "Scheduled file updates: Run update.sh" || echo "No changes to commit"
           git push origin main
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
